@@ -48,9 +48,11 @@ public class UserDetailsController {
 	                return new ResponseEntity<>(responce, HttpStatus.CREATED);
 	            } else if (other.getEmail().equals(userDetails.getEmail()) && 
 	            		!other.getPassword().equals(userDetails.getPassword())) {
+	            	responce = new APISuccessResponse(HttpStatus.NOT_FOUND, "Check your email and password",userDetailsRepository.findByEmail(other.getEmail()));
 	            	return new ResponseEntity<>(responce, HttpStatus.CREATED);
 	            }
 	        }
+	        responce = new APISuccessResponse(HttpStatus.NOT_FOUND, "Please Sign Up",null);
 	        return new ResponseEntity<>(responce, HttpStatus.CREATED);
 	    }
 	 
