@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.spring.crud.model.UserDetails;
 import com.spring.crud.repository.UserDetailsRepository;
+import com.spring.response.APISuccessResponse;
 @CrossOrigin(origins = "null", allowedHeaders = "*")
 @RestController 
 @RequestMapping("/api")
@@ -21,11 +22,13 @@ public class UserDetailsController {
 	@Autowired
 	UserDetailsRepository userDetailsRepository;
 	@PostMapping("/signUp")
-	public ResponseEntity<UserDetails> createUserDetails(@RequestBody UserDetails userDetails){
+	public ResponseEntity<APISuccessResponse> createUserDetails(@RequestBody UserDetails userDetails){
+		  APISuccessResponse responce = null;
 		try {
 			UserDetails _userDetails = userDetailsRepository
-					.save(new UserDetails(userDetails.getEmail(), userDetails.getName(),userDetails.getPassword(), userDetails.getRoleID()  ));
-			return new ResponseEntity<>(_userDetails, HttpStatus.CREATED);
+					.save(new UserDetails(userDetails.getEmail(), userDetails.getName(),userDetails.getRoleID(),userDetails.getPassword()));
+			responce = new APISuccessResponse(HttpStatus.OK, "User Created", _userDetails);
+			return new ResponseEntity<>(responce, HttpStatus.CREATED);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e);
@@ -33,28 +36,24 @@ public class UserDetailsController {
 		}
 	}
 	 @PostMapping("/login")
-	    public Status loginUser(@Valid @RequestBody UserDetails userDetails) {
+	    public ResponseEntity<APISuccessResponse> loginUser(@Valid @RequestBody UserDetails userDetails) {
+		 	APISuccessResponse responce = null;
 	        List<UserDetails> users = userDetailsRepository.findAll();
 	        for (UserDetails other : users) {
 	        	
 	            if (other.getEmail().equals(userDetails.getEmail()) && 
 	            		other.getPassword().equals(userDetails.getPassword())) {
-//	            	userDetails.setLoggedIn(true);
 	            	userDetailsRepository.findByEmail(other.getEmail());
-	            	System.out.println(userDetailsRepository.findByEmail(other.getEmail()));
-	            	userDetailsRepository.save(userDetails);
-	                return Status.SUCCESS;
+	            	responce = new APISuccessResponse(HttpStatus.OK, "Get Login User Detail", userDetailsRepository.findByEmail(other.getEmail()));
+	                return new ResponseEntity<>(responce, HttpStatus.CREATED);
 	            } else if (other.getEmail().equals(userDetails.getEmail()) && 
 	            		!other.getPassword().equals(userDetails.getPassword())) {
-	            	return Status.Wrong_Password;
+	            	return new ResponseEntity<>(responce, HttpStatus.CREATED);
 	            }
 	        }
-	        return Status.Please_SignUp;
+	        return new ResponseEntity<>(responce, HttpStatus.CREATED);
 	    }
-	 @GetMapping("/employees")
-	    public List < UserDetails > getAllEmployees() {
-	        return userDetailsRepository.findAll();
-	    }
+	 
 	
 	
 }
