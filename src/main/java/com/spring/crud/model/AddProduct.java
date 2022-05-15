@@ -18,17 +18,23 @@ public class AddProduct {
 	private float price;
 	@Column(name = "IMAGEURL")
 	private String imageURL;
+	@Column(name = "DESCRIPTION")
+	private String description;
 	public AddProduct() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public AddProduct(int categoryID, String materialName, float price, String imageURL) {
+	
+	public AddProduct(int categoryID, String materialName, float price, String imageURL,
+			String description) {
 		super();
 		this.categoryID = categoryID;
 		this.materialName = materialName;
 		this.price = price;
 		this.imageURL = imageURL;
+		this.description = description;
 	}
+
 	public int getMaterialID() {
 		return materialID;
 	}
@@ -56,6 +62,14 @@ public class AddProduct {
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
 	}
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Override
 	public String toString() {
 		return "Materials [categoryID=" + categoryID + ", materialName=" + materialName + ", price=" + price + "]";
