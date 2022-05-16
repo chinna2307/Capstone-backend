@@ -4,6 +4,8 @@ import javax.persistence.*;
 @Table(name = "userdetails")
 public class UserDetails {
 	@Id
+	@Column(name = "userid")
+	private int userID;
 	@Column(name = "email")
 	private String email;
 	@Column(name = "name")
@@ -46,6 +48,10 @@ public class UserDetails {
 	}
 	public void setRoleID(int roleID) {
 		this.roleID = roleID;
+	}
+	
+	public int getUserID() {
+		return userID;
 	}
 	@Override
 	public String toString() {
