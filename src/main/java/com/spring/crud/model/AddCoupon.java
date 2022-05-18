@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -22,6 +24,7 @@ public class AddCoupon {
 	private float discount;
 	@Column(name = "CATEGORYID")
 	private int categoryID;
+	
 	public AddCoupon() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -61,6 +64,7 @@ public class AddCoupon {
 	public int getCouponID() {
 		return couponID;
 	}
+	
 	
 
 }

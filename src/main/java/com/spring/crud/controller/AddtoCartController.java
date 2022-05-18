@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.crud.model.AddCoupon;
 import com.spring.crud.model.AddProduct;
 import com.spring.crud.model.AddToCart;
+import com.spring.crud.model.GetCartMaterials;
 import com.spring.crud.repository.AddCouponRepository;
 import com.spring.crud.repository.AddToCartRepository;
 import com.spring.response.APISuccessResponse;
@@ -38,6 +39,19 @@ public class AddtoCartController {
 			AddToCart _addToCart = addToCartRepository
 					.save(new AddToCart(addToCart.getCartID(),addToCart.getMaterialID(),addToCart.getUserID()));
 			responce = new APISuccessResponse(HttpStatus.OK, "Product Added in Cart Successfully", _addToCart);
+			return new ResponseEntity<>(responce, HttpStatus.CREATED);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@GetMapping("/getAddedtoCart/{id}")
+    public ResponseEntity<APISuccessResponse> getAddedtoCart(@PathVariable(value = "id") int userID){
+		  APISuccessResponse responce = null;
+		try {
+			List<GetCartMaterials> productList = addToCartRepository.findByUserID(userID);
+			responce = new APISuccessResponse(HttpStatus.OK, "Get Cart Product Successfully", productList);
 			return new ResponseEntity<>(responce, HttpStatus.CREATED);
 		} catch (Exception e) {
 			// TODO: handle exception
