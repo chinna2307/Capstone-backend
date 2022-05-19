@@ -59,5 +59,18 @@ public class AddtoCartController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
+	@DeleteMapping("/deleteAddToCart/{id}")
+    public ResponseEntity<APISuccessResponse> deleteCartProduct(@PathVariable(value = "id") int cartID){
+		  APISuccessResponse responce = null;
+		try {
+			
+			addToCartRepository.deleteById(cartID);
+			responce = new APISuccessResponse(HttpStatus.OK, "Cart Product deleted Successfully", null);
+			return new ResponseEntity<>(responce, HttpStatus.CREATED);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
