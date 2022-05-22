@@ -22,20 +22,18 @@ public class AddCoupon {
 	private String couponCode;
 	@Column(name = "DISCOUNT")
 	private float discount;
-	@Column(name = "CATEGORYID")
-	private int categoryID;
+	
 	
 	public AddCoupon() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public AddCoupon(int couponID, String couponName, String couponCode, float discount, int categoryID) {
+	public AddCoupon(int couponID, String couponName, String couponCode, float discount) {
 		super();
 		this.couponID = couponID;
 		this.couponName = couponName;
 		this.couponCode = couponCode;
 		this.discount = discount;
-		this.categoryID = categoryID;
 	}
 	public String getCouponName() {
 		return couponName;
@@ -55,12 +53,7 @@ public class AddCoupon {
 	public void setDiscount(float discount) {
 		this.discount = discount;
 	}
-	public int getCategoryID() {
-		return categoryID;
-	}
-	public void setCategoryID(int categoryID) {
-		this.categoryID = categoryID;
-	}
+	
 	public int getCouponID() {
 		return couponID;
 	}

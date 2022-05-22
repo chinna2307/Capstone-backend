@@ -31,7 +31,7 @@ public class AddCouponController {
 		  APISuccessResponse responce = null;
 		try {
 			AddCoupon _addCoupon = addCouponRepository
-					.save(new AddCoupon(addCoupon.getCouponID(), addCoupon.getCouponName(),addCoupon.getCouponCode(),addCoupon.getDiscount(),addCoupon.getCategoryID()));
+					.save(new AddCoupon(addCoupon.getCouponID(), addCoupon.getCouponName(),addCoupon.getCouponCode(),addCoupon.getDiscount()));
 			responce = new APISuccessResponse(HttpStatus.OK, "Coupon Added Successfully", _addCoupon);
 			return new ResponseEntity<>(responce, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -40,11 +40,11 @@ public class AddCouponController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	@GetMapping("/getCouponByCategory/{id}")
-    public ResponseEntity<APISuccessResponse> getProductByCategoryId(@PathVariable(value = "id") int categoryID){
+	@GetMapping("/getCoupon")
+    public ResponseEntity<APISuccessResponse> getCoupon(){
 		  APISuccessResponse responce = null;
 		try {
-			List<AddCoupon> couponList = addCouponRepository.findByCategoryId(categoryID);
+			List<AddCoupon> couponList = addCouponRepository.findAll();
 			responce = new APISuccessResponse(HttpStatus.OK, "Get Coupon Successfully", couponList);
 			return new ResponseEntity<>(responce, HttpStatus.CREATED);
 		} catch (Exception e) {
