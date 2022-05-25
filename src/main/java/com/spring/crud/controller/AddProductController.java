@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.crud.model.AddProduct;
+import com.spring.crud.model.GetOrderedProducts;
 import com.spring.crud.repository.AddProductRepository;
 import com.spring.response.APISuccessResponse;
 @CrossOrigin(origins = "null", allowedHeaders = "*")
@@ -79,6 +80,10 @@ public class AddProductController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+    @GetMapping("/getTotalProducts")
+	 public List<AddProduct> getAllProducts(){
+		 return addProductRepository.findAll();
+	 }
     
 
 

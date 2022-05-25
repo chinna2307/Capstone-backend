@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.crud.model.GetCartMaterials;
 import com.spring.crud.model.GetOrderedProducts;
 import com.spring.crud.model.PlaceOrder;
+import com.spring.crud.model.UserDetails;
 import com.spring.crud.repository.PlaceOrderRepository;
 import com.spring.response.APISuccessResponse;
 @CrossOrigin(origins = "null", allowedHeaders = "*")
@@ -50,5 +51,9 @@ public class PlaceOrderController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	@GetMapping("/getOrderdedProducts")
+	 public List<GetOrderedProducts> getOrderdedProducts(){
+		 return placeOrderRepository.findForAdmin();
+	 }
 
 }

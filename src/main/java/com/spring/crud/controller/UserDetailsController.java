@@ -55,6 +55,10 @@ public class UserDetailsController {
 	        responce = new APISuccessResponse(HttpStatus.NOT_FOUND, "Please Sign Up",null);
 	        return new ResponseEntity<>(responce, HttpStatus.CREATED);
 	    }
+	 @GetMapping("/getAllUsers")
+	 public List<UserDetails> getUser(){
+		 return userDetailsRepository.findAll();
+	 }
 	 
 	
 	

@@ -12,4 +12,7 @@ public interface PlaceOrderRepository extends JpaRepository<PlaceOrder,Integer> 
 	@Query("select a,m from GetOrderedProducts a "
 			+ "inner join AddProduct m on m.materialID = a.materialID where a.userID = ?1")
     List<GetOrderedProducts> findByUserID(int userID);
+	@Query("select a,m from GetOrderedProducts a "
+			+ "inner join AddProduct m on m.materialID = a.materialID")
+    List<GetOrderedProducts> findForAdmin();
 }
