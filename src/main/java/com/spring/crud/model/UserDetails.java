@@ -5,6 +5,7 @@ import javax.persistence.*;
 public class UserDetails {
 	@Id
 	@Column(name = "userid")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userID;
 	@Column(name = "email")
 	private String email;
