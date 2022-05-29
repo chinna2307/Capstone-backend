@@ -13,47 +13,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.crud.model.GetCartMaterials;
+import com.spring.crud.dto.OrderRequest;
 import com.spring.crud.model.GetOrderedProducts;
-import com.spring.crud.model.PlaceOrder;
-import com.spring.crud.model.UserDetails;
+import com.spring.crud.model.GetSingleOrder;
+import com.spring.crud.model.OrderMaster;
+import com.spring.crud.model.OrderMaterials;
 import com.spring.crud.repository.AddToCartRepository;
-import com.spring.crud.repository.PlaceOrderRepository;
+import com.spring.crud.repository.GetSingleOrderedProductRepo;
+import com.spring.crud.repository.OrderMasterRepository;
+import com.spring.crud.repository.OrderMaterialsRepository;
 import com.spring.response.APISuccessResponse;
 @CrossOrigin(origins = "null", allowedHeaders = "*")
-@RestController 
+@RestController
 @RequestMapping("/api")
-public class PlaceOrderController {
+public class OrderRequestController {
 	@Autowired
 	AddToCartRepository addToCartRepository;
 	@Autowired
-	PlaceOrderRepository placeOrderRepository;
-	@PostMapping("/placeOrder")
-	public ResponseEntity<APISuccessResponse> placeOrder(@RequestBody List<PlaceOrder> placeOrder){
-		  APISuccessResponse responce = null;
-		try {
-			int userID = 0;
-			for(int i = 0; i < placeOrder.size(); i++) {
-				userID = placeOrder.get(i).getUserID();
-				System.out.println(placeOrder.get(i).getUserID());
-				System.out.println("materialID");
-				System.out.println(placeOrder.get(i).getMaterialID());
-	        }
-//			addToCartRepository.deleteByUserId(userID);
-//			placeOrderRepository.saveAll(placeOrder);
-			responce = new APISuccessResponse(HttpStatus.OK, "Product Ordered Successfully", null);
-			return new ResponseEntity<>(responce, HttpStatus.CREATED);
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e);
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	private OrderMasterRepository orderMasterRepository;
+	@Autowired
+	private OrderMaterialsRepository orderMaterialsRepository;
+	@Autowired
+	private GetSingleOrderedProductRepo getSingleOrderedProductRepo;
+	@PostMapping("/place")
+	public OrderMaster placeOrder(@RequestBody OrderRequest request) {
+		addToCartRepository.deleteByUserId(request.getOrderMaster().getUserID());
+		 return orderMasterRepository.save(request.getOrderMaster());
 	}
-	@GetMapping("/getUserOrderedDetails/{id}")
+	@GetMapping("/getUserOrdered/{id}")
     public ResponseEntity<APISuccessResponse> getOrderDetails(@PathVariable(value = "id") int userID){
 		  APISuccessResponse responce = null;
 		try {
-			List<GetOrderedProducts> productList = placeOrderRepository.findByUserID(userID);
+			List<OrderMaster> productList = orderMasterRepository.findByUserID(userID);
 			responce = new APISuccessResponse(HttpStatus.OK, "Get Ordered Product Successfully", productList);
 			return new ResponseEntity<>(responce, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -62,6 +53,23 @@ public class PlaceOrderController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	@PostMapping("/getSingleOrder")
+    public ResponseEntity<APISuccessResponse> getOrderDetails(@RequestBody GetSingleOrder request){
+		  APISuccessResponse responce = null;
+		try {
+			List<GetSingleOrder> productList = getSingleOrderedProductRepo.findOrder(request.getUserID(),request.getOr_fk());
+			responce = new APISuccessResponse(HttpStatus.OK, "Get Ordered Product Successfully", productList);
+			return new ResponseEntity<>(responce, HttpStatus.CREATED);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@GetMapping("/getOrderdedProducts")
+	 public List<OrderMaster> getOrderdedProducts(){
+		 return orderMasterRepository.findAll();
+	 }
 	
-
+	
 }
