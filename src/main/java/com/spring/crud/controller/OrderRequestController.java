@@ -40,6 +40,10 @@ public class OrderRequestController {
 		addToCartRepository.deleteByUserId(request.getOrderMaster().getUserID());
 		 return orderMasterRepository.save(request.getOrderMaster());
 	}
+	@PostMapping("/placeSingle")
+	public OrderMaster placeSingleOrder(@RequestBody OrderRequest request) {
+		 return orderMasterRepository.save(request.getOrderMaster());
+	}
 	@GetMapping("/getUserOrdered/{id}")
     public ResponseEntity<APISuccessResponse> getOrderDetails(@PathVariable(value = "id") int userID){
 		  APISuccessResponse responce = null;
