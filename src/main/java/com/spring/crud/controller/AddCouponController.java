@@ -34,8 +34,7 @@ public class AddCouponController {
 					.save(new AddCoupon(addCoupon.getCouponID(), addCoupon.getCouponName(),addCoupon.getCouponCode(),addCoupon.getDiscount()));
 			responce = new APISuccessResponse(HttpStatus.OK, "Coupon Added Successfully", _addCoupon);
 			return new ResponseEntity<>(responce, HttpStatus.CREATED);
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception 
 			System.out.println(e);
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
